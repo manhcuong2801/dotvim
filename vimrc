@@ -70,28 +70,14 @@ Plugin 'junegunn/fzf'
 Plugin 'lokaltog/vim-powerline'
 Plugin 'lambdalisue/vim-pyenv'
 
+Plugin 'epmatsw/ag.vim'
+
 Plugin 'davidhalter/jedi-vim'
 " let Vundle manage Vundle, required
 "Plugin 'VundleVim/Vundle.vim'
 call vundle#end()
-set runtimepath+=~/.vim/bundle/neobundle.vim/
-"call neobundle#begin(expand('~/.vim/bundle/'))
-"
-"NeoBundleFetch 'Shougo/neobundle.vim'
-"NeoBundle 'davidhalter/jedi-vim'
-"
-"" Do not load vim-pyenv until *.py is opened and
-"" make sure that it is loaded after jedi-vim is loaded.
-"NeoBundleLazy 'lambdalisue/vim-pyenv', {
-"        \ 'depends': ['davidhalter/jedi-vim'],
-"        \ 'autoload': {
-"        \   'filetypes': ['python', 'python3'],
-"        \ }}
-"
-"call neobundle#end()
 filetype plugin indent on
 
-"NeoBundleCheck
 set shell=/bin/zsh
 set guifont=Menlo:h14
 set modelines=0
@@ -113,7 +99,6 @@ set ruler
 set backspace=indent,eol,start
 set laststatus=2
 set number
-set relativenumber
 set noundofile
 "nnoremap / /\v
 "vnoremap / /\v
@@ -123,15 +108,12 @@ set gdefault
 set incsearch
 set showmatch
 set hlsearch
-nnoremap <leader><space> :noh<cr>
 nnoremap <tab> %
 vnoremap <tab> %
 set wrap
 set linebreak
 set nolist
 set formatoptions=qrn1
-"set spell spelllang=en_us
-set colorcolumn=80
 
 " Aesthetics
 
@@ -161,10 +143,15 @@ vnoremap <F1> <ESC>
 au FocusLost * :wa
 vnoremap . :norm.<CR>
 
+" Jedi vim
+
+inoremap <C-j> <C-n>
+inoremap <C-k> <C-p>
+
 " Leader shortcuts
 
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
-nnoremap <leader>a :Ack
+nnoremap <leader>a :Ag
 nnoremap <leader>ft Vatzf
 nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
 nnoremap <leader>q gqip
@@ -181,25 +168,18 @@ nnoremap <leader>d :read !date<CR>
 nnoremap <leader>r :!!<CR>
 nnoremap <leader>m :normal @a
 nnoremap <leader>l :CtrlP<CR>
+
 nnoremap <leader>nt :NERDTree<CR>
 nnoremap <leader>s :set spell!<CR>
 nnoremap <leader>n :set nonumber!<CR>
 nnoremap <leader>rn :set norelativenumber!<CR>
 nnoremap <leader>c :nohl<CR>
-nnoremap <leader>pa :set nopaste!<CR>
-nnoremap <leader>rc :so $MYVIMRC<CR>
-nnoremap <leader>b :BlogSave publish<CR>
-nnoremap <leader>h :set ft=HTML<CR><CR>
 " Control shortcuts
 
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-
-"call plug#begin('~/.vim/plugged')
-"call plug#end()
-
 let python_highlight_all=1
 syntax enable
 
@@ -220,3 +200,8 @@ syntax enable
 "    autocmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
 "  augroup END
 "endif
+
+set cursorline
+hi CursorLine ctermbg=8 ctermfg=15 "8 = dark gray, 15 = gray
+hi Cursor ctermbg=15 ctermfg=8
+set noswapfile
